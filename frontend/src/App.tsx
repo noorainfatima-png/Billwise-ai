@@ -4,6 +4,8 @@ import { Layout } from "./components/Layout";
 import { BillingRecord, INITIAL_BILLING_HISTORY } from "./data/mockData";
 import { Dashboard } from "./pages/Dashboard";
 import { BillScanner } from "./pages/BillScanner";
+import { Simulator } from "./pages/Simulator";
+import { History } from "./pages/History";
 
 export default function App() {
   const [history, setHistory] = useState<BillingRecord[]>(INITIAL_BILLING_HISTORY);
@@ -18,22 +20,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Dashboard history={history} />} />
           <Route path="/scan" element={<BillScanner onAddRecord={handleAddRecord} />} />
-          <Route
-            path="/simulator"
-            element={
-              <div className="bg-[#FFFFFF] border border-[#E4E4E7] rounded-[6px] p-6 text-sm text-[#52525B]">
-                Appliance Simulator route ready.
-              </div>
-            }
-          />
-          <Route
-            path="/history"
-            element={
-              <div className="bg-[#FFFFFF] border border-[#E4E4E7] rounded-[6px] p-6 text-sm text-[#52525B]">
-                Billing Ledger route ready ({history.length} months).
-              </div>
-            }
-          />
+          <Route path="/simulator" element={<Simulator />} />
+          <Route path="/history" element={<History history={history} />} />
         </Routes>
       </Layout>
     </BrowserRouter>
