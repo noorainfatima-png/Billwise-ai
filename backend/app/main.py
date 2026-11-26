@@ -1,8 +1,8 @@
+
 from fastapi import FastAPI
 
 app = FastAPI(
-    title="BillWise AI",
-    description="Electricity Bill Predictor",
+    title="BillWise AI Backend",
     version="1.0.0",
 )
 
@@ -10,8 +10,7 @@ app = FastAPI(
 @app.get("/")
 def home():
     return {
-        "message": "Welcome to BillWise AI",
-        "status": "running",
+        "message": "BillWise AI Backend is running"
     }
 
 
@@ -19,5 +18,5 @@ def home():
 def health_check():
     return {
         "status": "healthy",
-        "service": "BillWise AI Backend",
+        "service": "BillWise AI Backend"
     }
