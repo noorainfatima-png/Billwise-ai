@@ -1,23 +1,26 @@
-from fastapi import FastAPI
 
-app = FastAPI(
-    title="BillWise AI",
-    description="Electricity Bill Predictor",
-    version="1.0.0",
-)
+from fastapi import HTTPException
+from pydantic import BaseModel, Field
+
+from app.tariff_engine import calculate_bill
 
 
-@app.get("/")
-def home():
-    return {
-        "message": "Welcome to BillWise AI",
-        "status": "running",
-    }
+class BillRequest(BaseModel):
+    units: float = Field(
+        ...,
+        ge=0,
+        description="Monthly electricity consumption in kWh",
+    )
 
 
-@app.get("/api/health")
-def health_check():
-    return {
-        "status": "healthy",
-        "service": "BillWise AI Backend",
-    }
+@app.post("/api/calculate")
+def calculate_electricity_bill(request: BillRequest):
+    try:
+        result = calculate_bill(request.units)
+        return result
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error),
+        )
